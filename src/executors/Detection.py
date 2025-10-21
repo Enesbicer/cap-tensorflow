@@ -1,6 +1,8 @@
 import os
 import sys
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../'))
+
 from sdks.novavision.src.media.image import Image
 from sdks.novavision.src.base.capsule import Capsule
 from capsules.Tensorflow.src.utils.loads import ModelLoader
