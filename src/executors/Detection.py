@@ -19,7 +19,7 @@ class Classification(Capsule):
         self.device = self.bootstrap.get("device")
         self.images = self.request.get_param("inputImage")
         self.num_predictions = self.request.get_param("num_predictions")
-        self.config_model_type = self.request.get_param("ConfigClassificationModelType")
+        self.config_model_type = self.request.get_param("ConfigDetectionModelType")
         self.model_name = self.request.get_param("ClassificationWeights")
         self.predictions = []
     
