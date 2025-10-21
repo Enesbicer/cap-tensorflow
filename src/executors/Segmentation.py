@@ -6,12 +6,12 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../'))
 
 from sdks.novavision.src.media.image import Image
 from sdks.novavision.src.base.capsule import Capsule
-from capsules.Pytorch.src.configs.config import CONFIG
-from capsules.Pytorch.src.utils.loads import ModelLoader
+from capsules.Tensorflow.src.configs.config import CONFIG
+from capsules.Tensorflow.src.utils.loads import ModelLoader
 from sdks.novavision.src.helper.executor import Executor
-from capsules.Pytorch.src.models.PackageModel import PackageModel
-from capsules.Pytorch.src.utils.response import build_response_segment
-from capsules.Pytorch.src.classes.TorchVision import TorchVisionSegmenter
+from capsules.Tensorflow.src.models.PackageModel import PackageModel
+from capsules.Tensorflow.src.utils.response import build_response_segment
+from capsules.Tensorflow.src.classes.TorchVision import TensorFlowSegmenter
 
 
 class Segmentation(Capsule):
@@ -41,7 +41,7 @@ class Segmentation(Capsule):
 
     def run(self):
         img = Image.get_frame(img=self.images, redis_db=self.redis_db)
-        segmenter = TorchVisionSegmenter(self)
+        segmenter = TensorFlowSegmenter(self)
         segmenter.predict(img.value, img.uID)
         return  build_response_segment(context=self)
 
