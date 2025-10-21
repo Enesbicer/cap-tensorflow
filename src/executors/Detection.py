@@ -20,7 +20,7 @@ class Classification(Capsule):
         self.images = self.request.get_param("inputImage")
         self.num_predictions = self.request.get_param("num_predictions")
         self.config_model_type = self.request.get_param("ConfigDetectionModelType")
-        self.model_name = self.request.get_param("ClassificationWeights")
+        self.model_name = self.request.get_param("DetectionWeights")
         self.predictions = []
     
     @staticmethod
@@ -30,9 +30,9 @@ class Classification(Capsule):
     
     def run(self):
         img = Image.get_frame(img=self.images, redis_db=self.redis_db)
-        classifier = TensorFlowClassifier(self)
+        classifier = TensorFlowDetector(self)
         classifier.predict(img.value, img.uID)
-        return build_response_classifier(context=self)
+        return build_response_detector(context=self)
 
 if "__main__" == __name__:
     Executor(sys.argv[1]).run()
