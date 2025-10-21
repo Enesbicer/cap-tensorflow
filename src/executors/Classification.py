@@ -32,7 +32,7 @@ class Classification(Capsule):
 
     def run(self):
         img = Image.get_frame(img=self.images, redis_db=self.redis_db)
-        classifier = TorchVisionClassifier(self)
+        classifier = TensorFlowClassifier(self)
         classifier.predict(img.value, img.uID)
         return build_response_classifier(context=self)
 
