@@ -9,7 +9,7 @@ from capsules.Tensorflow.src.utils.loads import ModelLoader
 from sdks.novavision.src.helper.executor import Executor
 from capsules.Tensorflow.src.models.PackageModel import PackageModel
 from capsules.Tensorflow.src.utils.response import build_response_classifier
-from capsules.Tensorflow.src.classes.TensorflowVision import TensorFlowClassifier
+from capsules.Tensorflow.src.classes.TensorflowVision import TensorFlowDetector
 
 class Classification(Capsule):
     def __init__(self, request, bootstrap):
