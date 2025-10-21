@@ -1,6 +1,6 @@
 
 from sdks.novavision.src.helper.package import PackageHelper
-from capsules.Pytorch.src.models.PackageModel import (
+from capsules.Tensorflow.src.models.PackageModel import (
     PackageModel, \
     PackageConfigs, \
     ConfigExecutor, \
