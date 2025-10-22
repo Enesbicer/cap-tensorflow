@@ -72,9 +72,7 @@ class ModelLoader:
     
     def load_models(self):
         model_keys = {
-            CONFIG["Detection"]: ("ConfigDetectionModelType", "DetectionWeights"),
-            CONFIG["Classification"]: ("ConfigClassificationModelType", "ClassificationWeights"),
-            CONFIG["Segmentation"]: ("ConfigSegmentationModelType", "SegmentationWeights"),
+            CONFIG["Classification"]: ("ConfigClassificationModelType", "ClassificationWeights")
         }
         
         os.environ['TFHUB_CACHE_DIR'] = "/storage/"

@@ -1,6 +1,6 @@
-import tensorflow as tf
+import keras
 
-from tensorflow.keras.applications import (
+from keras.applications import (
     Xception,
     VGG16,
     VGG19,
