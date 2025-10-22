@@ -42,8 +42,9 @@ TF_HUB_MODELS = {
     "mask_rcnn_inception_resnet_v2": "https://tfhub.dev/tensorflow/mask_rcnn/inception_resnet_v2_1024x1024/1",
 
     # Segmentation models (TensorFlow Hub)
-    "deeplabv3_mobilenet_v2": "https://tfhub.dev/tensorflow/deeplabv3_mobilenetv2_cityscapes/1",
-    "deeplabv3_resnet101": "https://tfhub.dev/tensorflow/deeplabv3_resnet101_cityscapes/1",
+    "hrnet_ade20k_w48": "https://tfhub.dev/google/HRNet/ade20k-hrnetv2-w48/1",
+    "mobile_food_segmenter_v1": "https://tfhub.dev/google/seefood/segmenter/mobile_food_segmenter_V1/1",
+    "deeplabv3_mobilenetv2_ade20k": "https://tfhub.dev/sayakpaul/lite-model/deeplabv3-mobilenetv2-ade20k/1/default/2",
 }
 
 model_map = {
