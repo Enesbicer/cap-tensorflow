@@ -1,65 +1,103 @@
-# config.py - TensorFlow/Keras Version
-
 import tensorflow as tf
+
 from tensorflow.keras.applications import (
-    EfficientNetV2M,
-    EfficientNetV2S,
-    EfficientNetV2L,
-    EfficientNetB7,
-    InceptionV3,
+    Xception,
+    VGG16,
+    VGG19,
+    ResNet50,
+    ResNet50V2,
     ResNet101,
+    ResNet101V2,
     ResNet152,
-    MobileNetV3Large,
-    MobileNetV3Small,
+    ResNet152V2,
+    InceptionV3,
+    InceptionResNetV2,
+    MobileNet,
+    MobileNetV2,
+    DenseNet121,
+    DenseNet169,
+    DenseNet201,
+    NASNetMobile,
+    NASNetLarge,
+    EfficientNetB0,
+    EfficientNetB1,
+    EfficientNetB2,
+    EfficientNetB3,
+    EfficientNetB4,
+    EfficientNetB5,
+    EfficientNetB6,
+    EfficientNetB7,
+    EfficientNetV2B0,
+    EfficientNetV2B1,
+    EfficientNetV2B2,
+    EfficientNetV2B3,
+    EfficientNetV2S,
+    EfficientNetV2M,
+    EfficientNetV2L,
     ConvNeXtTiny,
     ConvNeXtSmall,
     ConvNeXtBase,
-    ConvNeXtLarge
+    ConvNeXtLarge,
+    ConvNeXtXLarge
 )
 
-CONFIG = {
-    "storage_path": "/storage/",
-    "CustomWeight": "CustomWeight",
-    "PreTrained": "PreTrained",
-    "Semantic": "Semantic",
-    "Instance": "Instance",
-    "Detection": "Detection",
-    "Classification": "Classification",
-    "Segmentation": "Segmentation"
-}
-
-# TensorFlow Hub URLs for detection and segmentation models
-TF_HUB_MODELS = {
-    # Detection models (TensorFlow Hub)
-    "ssd_mobilenet_v2": "https://tfhub.dev/tensorflow/ssd_mobilenet_v2/2",
-    "efficientdet_d0": "https://tfhub.dev/tensorflow/efficientdet/d0/1",
-    "efficientdet_d1": "https://tfhub.dev/tensorflow/efficientdet/d1/1",
-    "efficientdet_d2": "https://tfhub.dev/tensorflow/efficientdet/d2/1",
-    "centernet_resnet50_v1": "https://tfhub.dev/tensorflow/centernet/resnet50v1_fpn_512x512/1",
-    "centernet_resnet101_v1": "https://tfhub.dev/tensorflow/centernet/resnet101v1_fpn_512x512/1",
-    "faster_rcnn_resnet50_v1": "https://tfhub.dev/tensorflow/faster_rcnn/resnet50_v1_640x640/1",
-    "faster_rcnn_resnet101_v1": "https://tfhub.dev/tensorflow/faster_rcnn/resnet101_v1_640x640/1",
-    "mask_rcnn_inception_resnet_v2": "https://tfhub.dev/tensorflow/mask_rcnn/inception_resnet_v2_1024x1024/1",
-
-    # Segmentation models (TensorFlow Hub)
-    "hrnet_ade20k_w48": "https://tfhub.dev/google/HRNet/ade20k-hrnetv2-w48/1",
-    "mobile_food_segmenter_v1": "https://tfhub.dev/google/seefood/segmenter/mobile_food_segmenter_V1/1",
-    "deeplabv3_mobilenetv2_ade20k": "https://tfhub.dev/sayakpaul/lite-model/deeplabv3-mobilenetv2-ade20k/1/default/2",
-}
 
 model_map = {
-    # Classification models with Keras Applications
-    "efficientnet_v2_m": (EfficientNetV2M, "imagenet"),
-    "efficientnet_v2_s": (EfficientNetV2S, "imagenet"),
-    "efficientnet_v2_l": (EfficientNetV2L, "imagenet"),
-    "efficientnet_b7": (EfficientNetB7, "imagenet"),
-    "inception_v3": (InceptionV3, "imagenet"),
-    "resnet101": (ResNet101, "imagenet"),
-    "resnet152": (ResNet152, "imagenet"),
-    "mobilenet_v3_small": (MobileNetV3Small, "imagenet"),
-    "mobilenet_v3_large": (MobileNetV3Large, "imagenet"),
-    "convnext_tiny": (ConvNeXtTiny, "imagenet"),
-    "convnext_small": (ConvNeXtSmall, "imagenet"),
-    "convnext_base": (ConvNeXtBase, "imagenet"),
-    "convnext_large": (ConvNeXtLarge, "imagenet"),
+    # Xception
+    "xception": Xception,
+
+    # VGG
+    "vgg16": VGG16,
+    "vgg19": VGG19,
+
+    # ResNet
+    "resnet50": ResNet50,
+    "resnet50_v2": ResNet50V2,
+    "resnet101": ResNet101,
+    "resnet101_v2": ResNet101V2,
+    "resnet152": ResNet152,
+    "resnet152_v2": ResNet152V2,
+
+    # Inception
+    "inception_v3": InceptionV3,
+    "inception_resnet_v2": InceptionResNetV2,
+
+    # MobileNet
+    "mobilenet": MobileNet,
+    "mobilenet_v2": MobileNetV2,
+
+    # DenseNet
+    "densenet121": DenseNet121,
+    "densenet169": DenseNet169,
+    "densenet201": DenseNet201,
+
+    # NASNet
+    "nasnet_mobile": NASNetMobile,
+    "nasnet_large": NASNetLarge,
+
+    # EfficientNet V1
+    "efficientnet_b0": EfficientNetB0,
+    "efficientnet_b1": EfficientNetB1,
+    "efficientnet_b2": EfficientNetB2,
+    "efficientnet_b3": EfficientNetB3,
+    "efficientnet_b4": EfficientNetB4,
+    "efficientnet_b5": EfficientNetB5,
+    "efficientnet_b6": EfficientNetB6,
+    "efficientnet_b7": EfficientNetB7,
+
+    # EfficientNet V2
+    "efficientnet_v2_b0": EfficientNetV2B0,
+    "efficientnet_v2_b1": EfficientNetV2B1,
+    "efficientnet_v2_b2": EfficientNetV2B2,
+    "efficientnet_v2_b3": EfficientNetV2B3,
+    "efficientnet_v2_s": EfficientNetV2S,
+    "efficientnet_v2_m": EfficientNetV2M,
+    "efficientnet_v2_l": EfficientNetV2L,
+
+    # ConvNeXt
+    "convnext_tiny": ConvNeXtTiny,
+    "convnext_small": ConvNeXtSmall,
+    "convnext_base": ConvNeXtBase,
+    "convnext_large": ConvNeXtLarge,
+    "convnext_xlarge": ConvNeXtXLarge
 }
