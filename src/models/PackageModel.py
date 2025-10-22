@@ -1,21 +1,21 @@
-
 from pydantic import Field, validator
 from typing import List, Optional, Union, Literal
-from sdks.novavision.src.base.model import  Package, Inputs, Configs, Outputs, Response, Request, Output, Input, Config,Image, Detection, KeyPoints
+from sdks.novavision.src.base.model import Package, Inputs, Configs, Outputs, Response, Request, Output, Input, Config,Image, Detection, KeyPoints
 
 
 class InputImage(Input):
     name: Literal["inputImage"] = "inputImage"
-    value: Union[List[Image],Image]
+    value: Union[List[Image], Image]
     type: str = "object"
 
     @validator("type", pre=True, always=True)
     def set_type_based_on_value(cls, value, values):
-        value = values.get('value')
-        if isinstance(value, Image):
+        val = values.get('value')
+        if isinstance(val, Image):
             return "object"
-        elif isinstance(value, list):
+        elif isinstance(val, list):
             return "list"
+        return "object"
 
     class Config:
         title = "Image"
@@ -118,7 +118,7 @@ class CustomFieldStorageId(Config):
 
     class Config:
         json_schema_extra = {
-            "class": "portalium\storage\widgets\FilePicker",
+            "class": "portalium\\storage\\widgets\\FilePicker",
             "options": {
                 "multiple": 0,
                 "returnAttribute": [
@@ -152,81 +152,110 @@ class ConfigConfidentThreshold(Config):
 
 
 
-#Detection
 
 class DetectionWeights1(Config):
-    name: Literal["fasterrcnn_resnet50_fpn_v2"] = "fasterrcnn_resnet50_fpn_v2"
-    value: Literal["fasterrcnn_resnet50_fpn_v2"] = "fasterrcnn_resnet50_fpn_v2"
+    name: Literal["ssd_mobilenet_v2"] = "ssd_mobilenet_v2"
+    value: Literal["ssd_mobilenet_v2"] = "ssd_mobilenet_v2"
     type: Literal["string"] = "string"
     field: Literal["option"] = "option"
 
     class Config:
-        title = "fasterrcnn_resnet50_fpn_v2"
+        title = "ssd_mobilenet_v2"
 
 
 class DetectionWeights2(Config):
-    name: Literal["fasterrcnn_mobilenet_v3_large_fpn"] = "fasterrcnn_mobilenet_v3_large_fpn"
-    value: Literal["fasterrcnn_mobilenet_v3_large_fpn"] = "fasterrcnn_mobilenet_v3_large_fpn"
+    name: Literal["efficientdet_d0"] = "efficientdet_d0"
+    value: Literal["efficientdet_d0"] = "efficientdet_d0"
     type: Literal["string"] = "string"
     field: Literal["option"] = "option"
 
     class Config:
-        title = "fasterrcnn_mobilenet_v3_large_fpn"
+        title = "efficientdet_d0"
 
 
 class DetectionWeights3(Config):
-    name: Literal["fasterrcnn_mobilenet_v3_large_320_fpn"] = "fasterrcnn_mobilenet_v3_large_320_fpn"
-    value: Literal["fasterrcnn_mobilenet_v3_large_320_fpn"] = "fasterrcnn_mobilenet_v3_large_320_fpn"
+    name: Literal["efficientdet_d1"] = "efficientdet_d1"
+    value: Literal["efficientdet_d1"] = "efficientdet_d1"
     type: Literal["string"] = "string"
     field: Literal["option"] = "option"
 
     class Config:
-        title = "fasterrcnn_mobilenet_v3_large_320_fpn"
+        title = "efficientdet_d1"
 
 
 class DetectionWeights4(Config):
-    name: Literal["fcos_resnet50_fpn"] = "fcos_resnet50_fpn"
-    value: Literal["fcos_resnet50_fpn"] = "fcos_resnet50_fpn"
+    name: Literal["efficientdet_d2"] = "efficientdet_d2"
+    value: Literal["efficientdet_d2"] = "efficientdet_d2"
     type: Literal["string"] = "string"
     field: Literal["option"] = "option"
 
     class Config:
-        title = "fcos_resnet50_fpn"
+        title = "efficientdet_d2"
 
 
 class DetectionWeights5(Config):
-    name: Literal["retinanet_resnet50_fpn_v2"] = "retinanet_resnet50_fpn_v2"
-    value: Literal["retinanet_resnet50_fpn_v2"] = "retinanet_resnet50_fpn_v2"
+    name: Literal["centernet_resnet50_v1"] = "centernet_resnet50_v1"
+    value: Literal["centernet_resnet50_v1"] = "centernet_resnet50_v1"
     type: Literal["string"] = "string"
     field: Literal["option"] = "option"
 
     class Config:
-        title = "retinanet_resnet50_fpn_v2"
+        title = "centernet_resnet50_v1_fpn_512x512"
 
 
 class DetectionWeights6(Config):
-    name: Literal["ssd300_vgg16"] = "ssd300_vgg16"
-    value: Literal["ssd300_vgg16"] = "ssd300_vgg16"
+    name: Literal["centernet_resnet101_v1"] = "centernet_resnet101_v1"
+    value: Literal["centernet_resnet101_v1"] = "centernet_resnet101_v1"
     type: Literal["string"] = "string"
     field: Literal["option"] = "option"
 
     class Config:
-        title = "ssd300_vgg16"
+        title = "centernet_resnet101_v1_fpn_512x512"
 
 
 class DetectionWeights7(Config):
-    name: Literal["ssdlite320_mobilenet_v3_large"] = "ssdlite320_mobilenet_v3_large"
-    value: Literal["ssdlite320_mobilenet_v3_large"] = "ssdlite320_mobilenet_v3_large"
+    name: Literal["faster_rcnn_resnet50_v1"] = "faster_rcnn_resnet50_v1"
+    value: Literal["faster_rcnn_resnet50_v1"] = "faster_rcnn_resnet50_v1"
     type: Literal["string"] = "string"
     field: Literal["option"] = "option"
 
     class Config:
-        title = "ssdlite320_mobilenet_v3_large"
+        title = "faster_rcnn_resnet50_v1_640x640"
+
+
+class DetectionWeights8(Config):
+    name: Literal["faster_rcnn_resnet101_v1"] = "faster_rcnn_resnet101_v1"
+    value: Literal["faster_rcnn_resnet101_v1"] = "faster_rcnn_resnet101_v1"
+    type: Literal["string"] = "string"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "faster_rcnn_resnet101_v1_640x640"
+
+
+class DetectionWeights9(Config):
+    name: Literal["mask_rcnn_inception_resnet_v2"] = "mask_rcnn_inception_resnet_v2"
+    value: Literal["mask_rcnn_inception_resnet_v2"] = "mask_rcnn_inception_resnet_v2"
+    type: Literal["string"] = "string"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "mask_rcnn_inception_resnet_v2_1024x1024"
 
 
 class DetectionWeights(Config):
     name: Literal["DetectionWeights"] = "DetectionWeights"
-    value: Union[DetectionWeights1, DetectionWeights2, DetectionWeights3, DetectionWeights4, DetectionWeights5, DetectionWeights6, DetectionWeights7]
+    value: Union[
+        DetectionWeights1,
+        DetectionWeights2,
+        DetectionWeights3,
+        DetectionWeights4,
+        DetectionWeights5,
+        DetectionWeights6,
+        DetectionWeights7,
+        DetectionWeights8,
+        DetectionWeights9
+    ]
     type: Literal["object"] = "object"
     field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
     restart: Literal[True] = True
@@ -236,9 +265,9 @@ class DetectionWeights(Config):
 
 
 class DetectionPreTrained(Config):
-    detectionWeights : DetectionWeights
+    detectionWeights: DetectionWeights
     configDevice: ConfigDevice
-    configConfidentThreshold : ConfigConfidentThreshold
+    configConfidentThreshold: ConfigConfidentThreshold
     name: Literal["PreTrained"] = "PreTrained"
     value: Literal["PreTrained"] = "PreTrained"
     type: Literal["string"] = "string"
@@ -249,7 +278,7 @@ class DetectionPreTrained(Config):
 
 
 class DetectionCustomWeight(Config):
-    detectionWeights : DetectionWeights
+    detectionWeights: DetectionWeights
     customFieldStorage: CustomFieldStorage
     configDevice: ConfigDevice
     configConfidentThreshold: ConfigConfidentThreshold
@@ -314,7 +343,7 @@ class DetectionExecutor(Config):
         }
 
 
-#Classification
+
 
 class ConfigWeightsTop5(Config):
     name: Literal["top5"] = "top5"
@@ -338,7 +367,7 @@ class ConfigWeightsTop1(Config):
 
 class ConfigNumPredictions(Config):
     name: Literal["NumPredictions"] = "NumPredictions"
-    value: Union[ConfigWeightsTop1,ConfigWeightsTop5]
+    value: Union[ConfigWeightsTop1, ConfigWeightsTop5]
     type: Literal["object"] = "object"
     field: Literal["dropdownlist"] = "dropdownlist"
 
@@ -375,6 +404,7 @@ class ClassificationWeights3(Config):
     class Config:
         title = "efficientnet_v2_l"
 
+
 class ClassificationWeights4(Config):
     name: Literal["efficientnet_b7"] = "efficientnet_b7"
     value: Literal["efficientnet_b7"] = "efficientnet_b7"
@@ -383,6 +413,7 @@ class ClassificationWeights4(Config):
 
     class Config:
         title = "efficientnet_b7"
+
 
 class ClassificationWeights5(Config):
     name: Literal["inception_v3"] = "inception_v3"
@@ -476,7 +507,21 @@ class ClassificationWeights13(Config):
 
 class ClassificationWeights(Config):
     name: Literal["ClassificationWeights"] = "ClassificationWeights"
-    value: Union[ClassificationWeights1, ClassificationWeights2, ClassificationWeights3, ClassificationWeights4, ClassificationWeights5, ClassificationWeights6, ClassificationWeights7, ClassificationWeights8, ClassificationWeights9, ClassificationWeights10, ClassificationWeights11, ClassificationWeights12, ClassificationWeights13]
+    value: Union[
+        ClassificationWeights1,
+        ClassificationWeights2,
+        ClassificationWeights3,
+        ClassificationWeights4,
+        ClassificationWeights5,
+        ClassificationWeights6,
+        ClassificationWeights7,
+        ClassificationWeights8,
+        ClassificationWeights9,
+        ClassificationWeights10,
+        ClassificationWeights11,
+        ClassificationWeights12,
+        ClassificationWeights13
+    ]
     type: Literal["object"] = "object"
     field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
     restart: Literal[True] = True
@@ -514,7 +559,7 @@ class NumClass(Config):
 
 class ClassificationCustomWeight(Config):
     classificationWeights: ClassificationWeights
-    numclass:NumClass
+    numclass: NumClass
     customFieldStorage: CustomFieldStorage
     configDevice: ConfigDevice
     configNumPredictions: ConfigNumPredictions
@@ -578,91 +623,41 @@ class ClassificationExecutor(Config):
         }
 
 
-#Segmentation
 
-class SemanticWeights1(Config):
-    name: Literal["deeplabv3_mobilenet_v3_large"] = "deeplabv3_mobilenet_v3_large"
-    value: Literal["deeplabv3_mobilenet_v3_large"] = "deeplabv3_mobilenet_v3_large"
+
+class SegmentationWeights1(Config):
+    name: Literal["hrnet_ade20k_w48"] = "hrnet_ade20k_w48"
+    value: Literal["hrnet_ade20k_w48"] = "hrnet_ade20k_w48"
     type: Literal["string"] = "string"
     field: Literal["option"] = "option"
 
     class Config:
-        title = "deeplabv3_mobilenet_v3_large"
+        title = "hrnet_ade20k_w48"
 
 
-class SemanticWeights2(Config):
-    name: Literal["deeplabv3_resnet101"] = "deeplabv3_resnet101"
-    value: Literal["deeplabv3_resnet101"] = "deeplabv3_resnet101"
+class SegmentationWeights2(Config):
+    name: Literal["mobile_food_segmenter_v1"] = "mobile_food_segmenter_v1"
+    value: Literal["mobile_food_segmenter_v1"] = "mobile_food_segmenter_v1"
     type: Literal["string"] = "string"
     field: Literal["option"] = "option"
 
     class Config:
-        title = "deeplabv3_resnet101"
+        title = "mobile_food_segmenter_v1"
 
 
-class SemanticWeights3(Config):
-    name: Literal["deeplabv3_resnet50"] = "deeplabv3_resnet50"
-    value: Literal["deeplabv3_resnet50"] = "deeplabv3_resnet50"
+class SegmentationWeights3(Config):
+    name: Literal["deeplabv3_mobilenetv2_ade20k"] = "deeplabv3_mobilenetv2_ade20k"
+    value: Literal["deeplabv3_mobilenetv2_ade20k"] = "deeplabv3_mobilenetv2_ade20k"
     type: Literal["string"] = "string"
     field: Literal["option"] = "option"
 
     class Config:
-        title = "deeplabv3_resnet50"
+        title = "deeplabv3_mobilenetv2_ade20k"
 
 
-class SemanticWeights4(Config):
-    name: Literal["fcn_resnet101"] = "fcn_resnet101"
-    value: Literal["fcn_resnet101"] = "fcn_resnet101"
-    type: Literal["string"] = "string"
-    field: Literal["option"] = "option"
-
-    class Config:
-        title = "fcn_resnet101"
-
-
-class SemanticWeights5(Config):
-    name: Literal["fcn_resnet50"] = "fcn_resnet50"
-    value: Literal["fcn_resnet50"] = "fcn_resnet50"
-    type: Literal["string"] = "string"
-    field: Literal["option"] = "option"
-
-    class Config:
-        title = "fcn_resnet50"
-
-
-class SemanticWeights6(Config):
-    name: Literal["lraspp_mobilenet_v3_large"] = "lraspp_mobilenet_v3_large"
-    value: Literal["lraspp_mobilenet_v3_large"] = "lraspp_mobilenet_v3_large"
-    type: Literal["string"] = "string"
-    field: Literal["option"] = "option"
-
-    class Config:
-        title = "lraspp_mobilenet_v3_large"
-
-
-class InstanceWeights2(Config):
-    name: Literal["maskrcnn_resnet50_fpn"] = "maskrcnn_resnet50_fpn"
-    value: Literal["maskrcnn_resnet50_fpn"] = "maskrcnn_resnet50_fpn"
-    type: Literal["string"] = "string"
-    field: Literal["option"] = "option"
-
-    class Config:
-        title = "maskrcnn_resnet50_fpn"
-
-
-class InstanceWeights1(Config):
-    name: Literal["maskrcnn_resnet50_fpn_v2"] = "maskrcnn_resnet50_fpn_v2"
-    value: Literal["maskrcnn_resnet50_fpn_v2"] = "maskrcnn_resnet50_fpn_v2"
-    type: Literal["string"] = "string"
-    field: Literal["option"] = "option"
-
-    class Config:
-        title = "maskrcnn_resnet50_fpn_v2"
-
-
-class SemanticWeights(Config):
-    name: Literal["SemanticWeights"] = "SemanticWeights"
-    value: Union[SemanticWeights1,SemanticWeights2,SemanticWeights3,SemanticWeights4,SemanticWeights5,SemanticWeights6]
+class SegmentationWeights(Config):
+    name: Literal["SegmentationWeights"] = "SegmentationWeights"
+    value: Union[SegmentationWeights1, SegmentationWeights2, SegmentationWeights3]
     type: Literal["object"] = "object"
     field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
     restart: Literal[True] = True
@@ -671,52 +666,10 @@ class SemanticWeights(Config):
         title = "Weights"
 
 
-class InstanceWeights(Config):
-    name: Literal["InstanceWeights"] = "InstanceWeights"
-    value: Union[InstanceWeights1,InstanceWeights2]
-    type: Literal["object"] = "object"
-    field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
-    restart: Literal[True] = True
-
-    class Config:
-        title = "Weights"
-
-
-class TypeSemantic(Config):
-    semanticWeights: SemanticWeights
-    name: Literal["Semantic"] = "Semantic"
-    value: Literal["Semantic"] = "Semantic"
-    type: Literal["string"] = "string"
-    field: Literal["option"] = "option"
-
-    class Config:
-        title = "Semantic"
-
-
-class TypeInstance(Config):
-    instanceWeights: InstanceWeights
-    name: Literal["Instance"] = "Instance"
-    value: Literal["Instance"] = "Instance"
-    type: Literal["string"] = "string"
-    field: Literal["option"] = "option"
-
-    class Config:
-        title = "Instance"
-
-
-class ConfigType(Config):
-    name: Literal["ConfigType"] = "ConfigType"
-    value: Union[TypeSemantic, TypeInstance]
-    type: Literal["object"] = "object"
-    field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
-    restart: Literal[True] = True
-
-    class Config:
-        title = "Type"
 
 
 class SegmentationPreTrained(Config):
-    configType: ConfigType
+    segmentationWeights: SegmentationWeights  # configType yerine geldi
     configDevice: ConfigDevice
     configConfidentThreshold: ConfigConfidentThreshold
     name: Literal["PreTrained"] = "PreTrained"
@@ -729,7 +682,7 @@ class SegmentationPreTrained(Config):
 
 
 class SegmentationCustomWeight(Config):
-    configType: ConfigType
+    segmentationWeights: SegmentationWeights  # configType yerine geldi
     customFieldStorage: CustomFieldStorage
     configDevice: ConfigDevice
     configConfidentThreshold: ConfigConfidentThreshold
@@ -792,8 +745,6 @@ class SegmentationExecutor(Config):
                 "value": 0
             }
         }
-
-
 
 
 
