@@ -326,7 +326,7 @@ class ClassificationPreTrained(Config):
     classificationWeights: ClassificationWeights
     configDevice: ConfigDevice
     configNumPredictions: ConfigNumPredictions
-    name: Literal["preTrained"] = "preTrained"
+    name: Literal["classificationPreTrained"] = "classificationPreTrained"
     value: Literal["PreTrained"] = "PreTrained"
     type: Literal["string"] = "string"
     field: Literal["option"] = "option"
@@ -355,7 +355,7 @@ class ClassificationCustomWeight(Config):
     storageId: StorageId
     configDevice: ConfigDevice
     configNumPredictions: ConfigNumPredictions
-    name: Literal["customWeight"] = "customWeight"
+    name: Literal["classificationCustomWeight"] = "classificationCustomWeight"
     value: Literal["CustomWeight"] = "CustomWeight"
     type: Literal["string"] = "string"
     field: Literal["option"] = "option"

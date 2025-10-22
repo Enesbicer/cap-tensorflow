@@ -16,7 +16,7 @@ class TensorFlowBase:
         self.device = obj.device
         self.model_name = obj.model_name
         self.model_type_is_custom = is_custom
-        _, self.weights = model_map[self.model_name]
+        self.weights = model_map[self.model_name]
         self.categories = None if self.model_type_is_custom else self.weights.meta["categories"]
 
     def preprocess(self, img: np.ndarray):
