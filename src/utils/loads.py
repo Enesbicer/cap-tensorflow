@@ -7,151 +7,39 @@ from capsules.Tensorflow.src.configs.configs import model_map
 
 
 class ModelLoader:
-    def __init__(self, application: Application, config, logger: LoggerManager):
-        self.application = application
-        self.config = config
-        self.logger = logger
+
+    def __init__(self, device: str, half: str, modelweightname: str):
+
+        self.device = self.request.get_param("configDevice")
+        self.half = self.request.get_param("configHalf")
+        self.modelweightname = self.request.get_param("configModelWeights")
         self.model = None
-        self.device = None
 
-    def select_model_device(self):
-        """Model için device seçimi yapar"""
-        try:
-            config_device = self.application.get_param(
-                config=self.config,
-                name="configDevice"
-            )
+        if self.device == 'cpu':
+            tf.config.set_visible_devices([], 'GPU')
+            self.device_context_name = '/cpu:0'
+        elif self.device == 'gpu':
+            gpus = tf.config.experimental.list_physical_devices('GPU')
+            if gpus:
+                try:
+                    for gpu in gpus:
+                        tf.config.experimental.set_memory_growth(gpu, True)
+                except RuntimeError as e:
+                    print(f"RuntimeError setting memory growth: {e}")
+            self.device_context_name = '/gpu:0'
+        else:
+            raise ValueError("Invalid device. Must be 'cpu' or 'gpu'.")
 
-            config_half = self.application.get_param(
-                config=self.config,
-                name="configHalf"
-            )
+        if self.half.lower() == 'true':
+            policy = tf.keras.mixed_precision.Policy('mixed_float16')
+        else:
+            policy = tf.keras.mixed_precision.Policy('float32')
+        tf.keras.mixed_precision.set_global_policy(policy)
 
-            # String'i boolean'a çevir
-            use_mixed_precision = (config_half == "True")
+        ModelClass = model_map.get(self.modelweightname)
 
-            if config_device == "ConfigDeviceGPU":
-                # GPU kontrolü
-                gpus = tf.config.list_physical_devices('GPU')
-                if gpus:
-                    try:
-                        # GPU memory growth ayarla
-                        for gpu in gpus:
-                            tf.config.experimental.set_memory_growth(gpu, True)
+        if not ModelClass:
+            raise ValueError(f"Model name '{self.modelweightname}' not found in model_map.")
 
-                        self.device = "/GPU:0"
-                        self.logger.info(f"GPU device seçildi: {gpus[0].name}")
-
-                        # Mixed precision ayarı
-                        if use_mixed_precision:
-                            policy = tf.keras.mixed_precision.Policy('mixed_float16')
-                            tf.keras.mixed_precision.set_global_policy(policy)
-                            self.logger.info("Mixed precision (FP16) aktif edildi")
-
-                    except RuntimeError as e:
-                        self.logger.error(f"GPU ayarlama hatası: {str(e)}")
-                        self.device = "/CPU:0"
-                        self.logger.info("CPU'ya geçildi")
-                else:
-                    self.logger.warning("GPU bulunamadı, CPU kullanılacak")
-                    self.device = "/CPU:0"
-
-            else:  # ConfigDeviceCPU
-                self.device = "/CPU:0"
-                self.logger.info("CPU device seçildi")
-
-                if use_mixed_precision:
-                    self.logger.warning("Mixed precision CPU'da desteklenmiyor, göz ardı edildi")
-
-            return self.device
-
-        except Exception as e:
-            self.logger.error(f"Device seçim hatası: {str(e)}")
-            self.device = "/CPU:0"
-            return self.device
-
-    def load_model(self):
-        """Model yükleme işlemini gerçekleştirir"""
-        try:
-            # Önce device seçimi yap
-            self.select_model_device()
-
-            # Config parametrelerini al
-            model_type = self.application.get_param(
-                config=self.config,
-                name="ConfigClassificationModelType"
-            )
-
-            model_name = self.application.get_param(
-                config=self.config,
-                name="classificationWeights"
-            )
-
-            is_custom = (model_type == "ClassificationCustomWeight")
-
-            # Seçilen device ile model yükle
-            with tf.device(self.device):
-                if is_custom:
-                    # Custom model için
-                    num_classes = self.application.get_param(
-                        config=self.config,
-                        name="numClass"
-                    )
-
-                    storage_id = self.application.get_param(
-                        config=self.config,
-                        name="storageSource"
-                    )
-
-                    weight_path = load_storage(storage_id)
-
-                    self.logger.info(f"Custom model yükleniyor: {model_name}, Classes: {num_classes}")
-
-                    # TensorFlow custom model yükleme
-                    if model_name in model_map:
-                        base_model = model_map[model_name](
-                            weights=None,
-                            include_top=False,
-                            input_shape=(224, 224, 3)
-                        )
-
-                        # Custom classifier ekleme
-                        x = tf.keras.layers.GlobalAveragePooling2D()(base_model.output)
-                        x = tf.keras.layers.Dense(256, activation='relu')(x)
-                        outputs = tf.keras.layers.Dense(num_classes, activation='softmax')(x)
-
-                        self.model = tf.keras.Model(inputs=base_model.input, outputs=outputs)
-
-                        # Ağırlıkları yükle
-                        self.model.load_weights(weight_path)
-                        self.logger.info(f"Custom weights yüklendi: {weight_path}")
-                    else:
-                        # Direkt kaydedilmiş model yükle
-                        self.model = tf.keras.models.load_model(weight_path)
-                        self.logger.info(f"Saved model yüklendi: {weight_path}")
-
-                else:
-                    # Pretrained model için
-                    self.logger.info(f"Pretrained model yükleniyor: {model_name}")
-
-                    if model_name in model_map:
-                        self.model = model_map[model_name](
-                            weights='imagenet',
-                            include_top=True
-                        )
-                        self.logger.info(f"Pretrained model başarıyla yüklendi: {model_name}")
-                    else:
-                        raise ValueError(f"Model bulunamadı: {model_name}")
-
-            self.logger.info(f"Model yükleme işlemi tamamlandı - Device: {self.device}")
-            return self.model
-
-        except Exception as e:
-            self.logger.error(f"Model yükleme hatası: {str(e)}")
-            raise
-
-
-def load_classification_model(application: Application, config, logger: LoggerManager):
-    """Model yükleme fonksiyonu"""
-    loader = ModelLoader(application, config, logger)
-    return loader.load_model()
+        with tf.device(self.device_context_name):
+            self.model = ModelClass(weights='imagenet')
