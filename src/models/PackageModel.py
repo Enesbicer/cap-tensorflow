@@ -436,4 +436,4 @@ class PackageConfigs(Configs):
 class PackageModel(Package):
     configs: PackageConfigs
     type: Literal["capsule"] = "capsule"
-    name: Literal["Pytorch"] = "Tensorflow"
+    name: Literal["Tensorflow"] = "Tensorflow"
