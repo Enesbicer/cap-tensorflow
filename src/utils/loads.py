@@ -3,7 +3,7 @@ import tensorflow as tf
 from sdks.novavision.src.base.logger import LoggerManager
 from capsules.Tensorflow.src.utils.utils import load_storage
 from sdks.novavision.src.base.application import Application
-from capsules.Tensorflow.src.configs.configs import CONFIG, model_map
+from capsules.Tensorflow.src.configs.configs import model_map
 
 
 class ModelLoader:
