@@ -4,7 +4,7 @@ from capsules.Tensorflow.src.models.PackageModel import (
     PackageModel,
     PackageConfigs,
     ConfigExecutor,
-    ClassificationExecutor,
+    Classification,
     ClassificationResponse,
     ClassificationOutputs,
     OutputDetections
@@ -15,7 +15,7 @@ def build_response_classifier(context):
     outputClassificationResults = OutputDetections(value=context.predictions)
     imageClassificationOutputs = ClassificationOutputs(outputDetections=outputClassificationResults)
     imageClassificationResponse = ClassificationResponse(outputs=imageClassificationOutputs)
-    imageClassificationExecutor = ClassificationExecutor(value=imageClassificationResponse)
+    imageClassificationExecutor = Classification(value=imageClassificationResponse)
     executor = ConfigExecutor(value=imageClassificationExecutor)
     packageConfigs = PackageConfigs(executor=executor)
     package = PackageHelper(packageModel=PackageModel, packageConfigs=packageConfigs)

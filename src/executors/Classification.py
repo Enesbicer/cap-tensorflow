@@ -5,11 +5,13 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../'))
 
 from sdks.novavision.src.media.image import Image
 from sdks.novavision.src.base.capsule import Capsule
-from capsules.Tensorflow.src.utils.loads import load_classification_model
+print("başladı")
+from capsules.Tensorflow.src.utils.loads import _load_classification_model
+print("model yükleme import yapıldı")
 from sdks.novavision.src.helper.executor import Executor
 from capsules.Tensorflow.src.models.PackageModel import PackageModel
 from capsules.Tensorflow.src.utils.response import build_response_classifier
-from capsules.Tensorflow.src.utils.prediction import create_predictor
+print("impoertlar tamam")
 
 class Classification(Capsule):
     def __init__(self, request, bootstrap):
